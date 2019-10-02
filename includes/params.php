@@ -8,7 +8,7 @@
 
 			<tr valign="top">
 				<th scope="row">Url сайта</th>
-				<td><input type="text" name="site" value="<?php echo get_option('site'); ?>" /></td>
+				<td><input type="text" name="site" value="<?php echo get_option('site'); ?>" /><p class="description">Ссылка на сайте, в формате <strong>sitename.domain</strong></p></td>
 			</tr>
 			
 			<tr valign="top">
@@ -18,7 +18,10 @@
 
 			<tr valign="top">
 				<th scope="row">Ключ Yandex</th>
-				<td><input type="text" name="key" value="<?php echo get_option('key'); ?>" /></td>
+				<td>
+					<input type="text" name="key" value="<?php echo get_option('key'); ?>" />
+					<p class="description">Ключ доступен в настройках <a target="_blank" href="https://xml.yandex.ru/settings/">XML Yandex</a></p>
+				</td>
 			</tr>
 
 		</table>
