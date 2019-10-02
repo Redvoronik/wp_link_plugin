@@ -1,0 +1,13 @@
+<div class="similar-articles">
+	<div className="similar-articles__column">
+		<span class="similar-articles__title">Статьи по теме</span>
+		<ul className="similar-articles__list">
+        <?php foreach ($posts as $post): ?>
+            <li className="similar-articles__item">
+            	<a className="similar-articles__link" href="<?= $post->url ?>"><?= $post->title ?></a>
+            </li>
+        <?php endforeach; ?>
+      	</ul>
+      	<div className="similar-articles__column">тут баннер с рекламой</div>
+    </div>
+</div>
