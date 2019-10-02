@@ -1,6 +1,6 @@
 <?php
 
-require_once plugin_dir_path(__FILE__) . 'RelatedTable.php';
+require_once plugin_dir_path(__FILE__) . 'models/RelatedTable.php';
 
 $listTable = new RelatedTable();
 $listTable->prepare_items();
