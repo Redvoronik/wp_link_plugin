@@ -16,12 +16,15 @@ function createLinkOnMainMenu()
         'Перелинковка yandex',
         'Перелинковка',
         'manage_options',
-        'yandex-related/includes/main.php'
+        'yandex-related/includes/main.php',
+        null,
+        'dashicons-randomize'
     );
 
-    add_menu_page(
-		'Настройка перелинковки', 
-		'Настройка перелинковки', 
+    add_submenu_page(
+        'yandex-related/includes/main.php',
+		'Настройка', 
+		'Настройка', 
 		'manage_options',
 		'yandex-related/includes/params.php'
 	);
