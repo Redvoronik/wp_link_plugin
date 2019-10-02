@@ -9,6 +9,7 @@ add_action('admin_menu', 'createLinkOnParamasMenu');
 register_setting('yandex-related-group', 'site');
 register_setting('yandex-related-group', 'user');
 register_setting('yandex-related-group', 'key');
+register_setting('yandex-related-group', 'advert');
 
 add_filter('the_content', array('YandexRelatedWidget', 'insert_related'));
 

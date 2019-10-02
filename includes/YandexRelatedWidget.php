@@ -48,6 +48,7 @@ class YandexRelatedWidget
     }
 
     private static function renderRelated(array $posts = []) {
+        $advert = get_option('advert');
         ob_start();
         include 'similarArticles.html';
         return ob_get_clean();

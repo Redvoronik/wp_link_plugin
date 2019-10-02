@@ -24,10 +24,18 @@
 				</td>
 			</tr>
 
+			<tr valign="top">
+				<th scope="row">Блок рекламы</th>
+				<td>
+					<textarea name="advert"><?php echo get_option('advert'); ?></textarea>
+					<p class="description">Контент отображающийся в блоке рядом с ссылками перелинковки</p>
+				</td>
+			</tr>
+
 		</table>
 
 		<input type="hidden" name="action" value="update" />
-		<input type="hidden" name="page_options" value="site,user,key" />
+		<input type="hidden" name="page_options" value="site,user,key,advert" />
 
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
