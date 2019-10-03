@@ -5,6 +5,8 @@ require_once plugin_dir_path(__FILE__) . 'models/RelatedTable.php';
 $listTable = new RelatedTable();
 $listTable->prepare_items((isset($_GET['param'])) ? $_GET['param'] : null);
 
+$wpdb->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+
 $few = $wpdb->get_results("SELECT article_id FROM wp_yandex_related GROUP BY article_id HAVING count(*) < 20");
 $nothing = $wpdb->get_results("SELECT article_id FROM wp_yandex_related GROUP BY article_id HAVING count(*) = 0");
 $count = $wpdb->get_results("SELECT count(*) as count FROM wp_yandex_related");

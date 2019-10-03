@@ -34,6 +34,8 @@ abstract class Simple_WP_List_Table extends WP_List_Table {
 		}
 
 		$query = "SELECT wp_posts.id as id, wp_posts.post_title as title, count(wp_yandex_related.related_article_id) as count_related_article_id, wp_posts.post_name as url, wp_yandex_related.updated_at as updated_at FROM wp_posts INNER JOIN wp_yandex_related ON wp_posts.id = wp_yandex_related.article_id " . $where . " GROUP BY wp_yandex_related.article_id ORDER BY wp_posts.id DESC";
+
+		$wpdb->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 	
 		$total_items = $wpdb->query($query); 
 		
