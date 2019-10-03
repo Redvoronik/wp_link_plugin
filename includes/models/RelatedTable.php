@@ -58,7 +58,8 @@ abstract class Simple_WP_List_Table extends WP_List_Table {
 		$columns = $this->get_columns();
 		$hidden = array();
 		$sortable = $this->get_sortable_columns();
-		$this->_column_headers = array($columns, $hidden, $sortable);		   
+		if($sortable > 1)
+			$this->_column_headers = array($columns, $hidden, $sortable);		   
 
 		
 		$this->process_bulk_action();
