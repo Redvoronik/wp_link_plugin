@@ -10,7 +10,6 @@ require_once plugin_dir_path(__FILE__) . 'includes/models/YandexRelated.php';
 require_once plugin_dir_path(__FILE__) . 'includes/models/YandexRelatedWidget.php';
 
 add_action('admin_menu', 'createLinkOnMainMenu');
-add_action('admin_menu', 'createLinkOnParamasMenu');
 
 register_setting('yandex-related-group', 'site');
 register_setting('yandex-related-group', 'user');
