@@ -3,7 +3,6 @@
 class YandexRelatedWidget
 {
     public static function insert_related($content) {
-
         global $post, $wpdb;
         $thePostID = $post->ID;
 
@@ -17,10 +16,9 @@ class YandexRelatedWidget
         $query = "SELECT wp_posts.post_title as title, wp_posts.post_name as url FROM wp_posts INNER JOIN wp_yandex_related ON wp_posts.id = wp_yandex_related.related_article_id WHERE wp_yandex_related.article_id = $thePostID";
 
         $posts = $wpdb->get_results($query);
-
         $posts = array_chunk($posts, 3);
 
-        if ( is_single() && ! is_admin() ) {
+        if ( ! is_admin() ) {
             foreach ($prs as $key => $pr) {
                 if(isset($posts[$key])) {
                     $similarBlock = static::renderRelated($posts[$key]);
@@ -28,7 +26,6 @@ class YandexRelatedWidget
                 }
             }
         }
-
 
         return $content;
     }
