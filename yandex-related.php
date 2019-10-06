@@ -3,7 +3,7 @@
  * Plugin Name: Yandex похожие статьи
  * Description: Плагин для получения и работы с похожими статьями
  * Author:      SVteam
- * Version:     1.1
+ * Version:     1.2
  */
 
 require_once plugin_dir_path(__FILE__) . 'includes/models/YandexRelated.php';

@@ -10,6 +10,8 @@ class YandexRelated
     private $ids = [];
     private $post = null;
 
+    public static $table = 'wp_yandex_related';
+
     function __construct(int $post_id) {
         $this->post = get_post($post_id);
         $this->site = get_option($site);
@@ -76,7 +78,7 @@ class YandexRelated
         $post_id = $this->post->ID;
 
         foreach ($this->ids as $id) {
-            $sql = "INSERT INTO `wp_yandex_related` (`article_id`, `related_article_id`) VALUES ( '$post_id', '$id')";
+            $sql = "INSERT INTO " . self::$table . " (`article_id`, `related_article_id`) VALUES ( '$post_id', '$id')";
 
             dbDelta($sql);
         }
@@ -92,5 +94,28 @@ class YandexRelated
         }
         
         return false;
+    }
+
+    public static function getAll(string $param = null, $page = 1)
+    {
+        global $wpdb;
+
+        $limit = 50;
+        $offset = $limit * ($page-1);
+
+        $where = null;
+        if($param == 'nothing') {
+            $where = ' WHERE wp_posts.id IN (SELECT article_id FROM ' . self::$table . ' GROUP BY article_id HAVING count(*) = 0)';
+        } elseif ($param == 'small') {
+            $where = ' WHERE wp_posts.id IN (SELECT article_id FROM ' . self::$table . ' GROUP BY article_id HAVING count(*) < 20)';
+        }
+
+        return $wpdb->get_results("SELECT wp_posts.id as id, wp_posts.post_title as title, count(wp_yandex_related.related_article_id) as count_related_article_id, wp_posts.post_name as url, wp_yandex_related.updated_at as updated_at FROM wp_posts INNER JOIN " . self::$table . " as wp_yandex_related ON wp_posts.id = wp_yandex_related.article_id " . $where . " GROUP BY wp_yandex_related.article_id ORDER BY wp_posts.id DESC LIMIT " . $limit . " OFFSET " . $offset);
+    }
+
+    public static function getCount(string $query = null)
+    {
+        global $wpdb;
+        return $wpdb->get_results('SELECT count(*) as count FROM ' . self::$table . ' ' . $query);
     }
 }
