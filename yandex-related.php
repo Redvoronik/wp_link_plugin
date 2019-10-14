@@ -29,15 +29,24 @@ function createDatabase()
     if($wpdb->get_var( "show tables like $wp_track_table" ) != $wp_track_table) 
     {
         $sql = "CREATE TABLE $wp_track_table (
-              id int(10) NOT NULL AUTO_INCREMENT,
-              article_id mediumint(5) NOT NULL,
-              related_article_id mediumint(5) NOT NULL,
+              id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+              article_id bigint(20) UNSIGNED NOT NULL,
+              related_article_id bigint(20) UNSIGNED NOT NULL,
               updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-              UNIQUE KEY id (id)
+              PRIMARY KEY (`id`),
+            KEY `article_id` (`article_id`),
+            KEY `related_article_id` (`related_article_id`)
             );";
 
-        require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
-        dbDelta($sql);
+        $wpdb->get_results($sql);
+
+        $set_link = "ALTER TABLE $wp_track_table ADD CONSTRAINT `articles` FOREIGN KEY (`article_id`) REFERENCES `wp_posts`(`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT";
+
+        $wpdb->get_results($set_link);
+
+        $set_related_link = "ALTER TABLE $wp_track_table ADD CONSTRAINT `relateds` FOREIGN KEY (`related_article_id`) REFERENCES `wp_posts`(`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT";
+
+        $wpdb->get_results($set_related_link);
     }
 }
 
