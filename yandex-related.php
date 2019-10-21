@@ -78,3 +78,20 @@ if(isset($_GET['method']) && $_GET['method'] == 'getRelated' && $_GET['post_id']
 	$yandexRelated->run();
 
 }
+
+//CRON
+add_action( 'admin_head', 'my_activation' );
+function my_activation() {
+    if( ! wp_next_scheduled( 'my_hourly_event' ) ) {
+        wp_schedule_event( time(), 'hourly', 'my_hourly_event');
+    }
+}
+
+add_action( 'my_hourly_event', 'do_this_hourly' );
+function do_this_hourly(){
+    $posts = YandexRelated::getCount('GROUP BY article_id HAVING count(*) = 0');
+    foreach ($posts as $key => $post) {
+        $yandexRelated = new YandexRelated($post->id);
+        $yandexRelated->run();
+    }
+}
