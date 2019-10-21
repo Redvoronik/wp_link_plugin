@@ -1,11 +1,16 @@
 <?php
 	$param 	= $_GET['param'] ?? null;
-	$page 	= $_GET['page'] ?? 1;
+	$page 	= $_GET['paget'] ?? 1;
 
-	$relateds 	= YandexRelated::getAll($param);
+	$orderBy = $_GET['orderby'] ?? 'id';
+	$order 	= $_GET['order'] ?? 'desc';
+
+	$relateds 	= YandexRelated::getAll($param, $page, $orderBy, $order);
 	$few 		= YandexRelated::getCount('GROUP BY article_id HAVING count(*) < 20');
 	$nothing 	= YandexRelated::getCount('GROUP BY article_id HAVING count(*) = 0');
 	$count 		= YandexRelated::getCount();
+
+	$totalPages = round($count[0]->count / 50);
 
 	$mainUrl = '/wp-admin/admin.php?page=yandex-related%2Fincludes%2Fmain.php';
 	$formUrl = $mainUrl . '&method=getRelated';
@@ -34,8 +39,8 @@
 		<thead>
 		<tr>
 			<?php foreach($params as $key => $value): ?>
-			<th scope="col" id="<?= $key ?>" class="manage-column column-username column-primary sortable desc">
-				<a href="http://maks.local/wp-admin/users.php?orderby=<?= $key ?>&amp;order=asc">
+			<th scope="col" id="<?= $key ?>" class="manage-column column-username column-primary sortable <?= ($key == $orderBy && $order == 'asc') ? 'desc' : 'asc' ?>">
+				<a href="/wp-admin/admin.php?page=yandex-related%2Fincludes%2Fmain.php&amp;orderby=<?= $key ?>&amp;order=<?= ($key == $orderBy && $order == 'asc') ? 'desc' : 'asc' ?>">
 					<span><?= $value ?></span>
 					<span class="sorting-indicator"></span>
 				</a>
@@ -58,6 +63,18 @@
 			</tr>
 		<?php endforeach; ?>
 	</table>
+	<div class="tablenav bottom">
+
+					<div class="alignleft actions">
+				</div>
+		<div class="tablenav-pages"><span class="displaying-num"><?= $count[0]->count ?> элемент</span>
+<span class="pagination-links"><span class="tablenav-pages-navspan button disabled" aria-hidden="true">«</span>
+<a class="prev-page button" href="/wp-admin/admin.php?page=yandex-related%2Fincludes%2Fmain.php&amp;orderby=<?= $orderBy ?>&amp;order=<?= ($key == $orderBy && $order == 'asc') ? 'desc' : 'asc' ?>&amp;paget=<?= ($page > 1) ? $page-1 : 1 ?>"><span class="screen-reader-text">Предыдущая страница</span><span aria-hidden="true">‹</span></a>
+<span class="screen-reader-text">Текущая страница</span><span id="table-paging" class="paging-input"><span class="tablenav-paging-text"><?= $page ?> из <span class="total-pages"><?= $totalPages ?></span></span></span>
+<a class="next-page button" href="/wp-admin/admin.php?page=yandex-related%2Fincludes%2Fmain.php&amp;orderby=<?= $orderBy ?>&amp;order=<?= ($key == $orderBy && $order == 'asc') ? 'desc' : 'asc' ?>&amp;paget=<?= ($page < $totalPages) ? $page+1 : $page ?>"><span class="screen-reader-text">Следующая страница</span><span aria-hidden="true">›</span></a>
+<a class="last-page button" href="/wp-admin/admin.php?page=yandex-related%2Fincludes%2Fmain.php&amp;orderby=<?= $orderBy ?>&amp;order=<?= ($key == $orderBy && $order == 'asc') ? 'desc' : 'asc' ?>&amp;paget=$totalPages"><span class="screen-reader-text">Последняя страница</span><span aria-hidden="true">»</span></a></span></div>
+		<br class="clear">
+	</div>
 	<?php else: ?>
 	<div style="margin-top: 70px;">
 		<span>Ничего не найдено</span>
