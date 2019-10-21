@@ -9,6 +9,13 @@
 
 	$mainUrl = '/wp-admin/admin.php?page=yandex-related%2Fincludes%2Fmain.php';
 	$formUrl = $mainUrl . '&method=getRelated';
+
+	$params = [
+		'id' => 'ID статьи', 
+		'title' => 'Заголовок', 
+		'count_related_article_id' => 'Кол-во похожих', 
+		'updated_at' => 'Обновлено'
+	];
 ?>
 
 <div>
@@ -23,33 +30,34 @@
 	</div>
 	
 	<?php if(!empty($relateds)): ?>
-	<div style="margin-top: 70px;">
-		<table cellspacing="2" border="1" cellpadding="5" style="border-color: #AAA;">
-			<thead>
-				<th>id</th>
-				<th>Заголовок</th>
-				<th>Кол-во похожих</th>
-				<th>Обновлено</th>
-				<th>Действия</th>
-			</thead>
-			<tbody>
-				<?php foreach($relateds as $related): ?>
-					<tr>
-						<td><?= $related->id ?></td>
-						<td><a target="_blank" href="/<?= $related->url ?>"><?= $related->title ?></a></td>
-						<td><?= $related->count_related_article_id ?></td>
-						<td><?= $related->updated_at ?></td>
-						<td>
-							<form method="post" action="<?= $formUrl ?>">
-								<input type="hidden" name="post_id" value="<?= $related->id ?>">
-								<button type="submit">Обновить</button>
-							</form>
-						</td>
-					</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
-	</div>
+		<table style="margin-top: 30px;" class="wp-list-table widefat fixed striped users">
+		<thead>
+		<tr>
+			<?php foreach($params as $key => $value): ?>
+			<th scope="col" id="<?= $key ?>" class="manage-column column-username column-primary sortable desc">
+				<a href="http://maks.local/wp-admin/users.php?orderby=<?= $key ?>&amp;order=asc">
+					<span><?= $value ?></span>
+					<span class="sorting-indicator"></span>
+				</a>
+			</th>
+			<?php endforeach; ?>
+		</tr>
+		</thead>
+
+		<tbody id="the-list" data-wp-lists="list:user">
+			
+		<?php foreach($relateds as $related): ?>
+			<tr>
+				<td>
+					<a target="_blank" href="/<?= $related->url ?>"><strong><?= $related->id ?></strong></a>
+				</td>
+				<td><?= $related->title ?></td>
+				<td><strong><?= $related->count_related_article_id ?></strong><div class="row-actions">
+						<span class="edit"><a href="<?= $formUrl ?>&id=<?= $related->id ?>">Обновить</a></div></td>
+				<td><?= $related->updated_at ?></td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
 	<?php else: ?>
 	<div style="margin-top: 70px;">
 		<span>Ничего не найдено</span>

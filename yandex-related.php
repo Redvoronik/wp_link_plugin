@@ -72,9 +72,9 @@ function createLinkOnMainMenu()
 	);
 }
 
-if(isset($_GET['method']) && $_GET['method'] == 'getRelated' && $_POST['post_id']) {
+if(isset($_GET['method']) && $_GET['method'] == 'getRelated' && $_GET['post_id']) {
 
-    $yandexRelated = new YandexRelated($_POST['post_id']);
+    $yandexRelated = new YandexRelated($_GET['post_id']);
 	$yandexRelated->run();
 
 }
