@@ -14,21 +14,27 @@ class YandexRelatedWidget
         $posts = array_chunk($posts, 3);
 
         if ( ! is_admin() ) {
-            $insertHelper = new InsertHelper();
-            $insertHelper->content = $content;
-            $insertHelper->bannerHtml = static::renderRelated($posts[0]);
-            $insertHelper->paragraphId = 1;
-            $content = $insertHelper->run();
+            if(isset($posts[0])) {
+                $insertHelper = new InsertHelper();
+                $insertHelper->content = $content;
+                $insertHelper->bannerHtml = static::renderRelated($posts[0]);
+                $insertHelper->paragraphId = 1;
+                $content = $insertHelper->run();
+            }
+            
+            if(isset($posts[1])) {
+                $insertHelper->content = $content;
+                $insertHelper->bannerHtml = static::renderRelated($posts[1]);
+                $insertHelper->adaptiveIndex = 1/2;
+                $content = $insertHelper->run();
+            }
 
-            $insertHelper->content = $content;
-            $insertHelper->bannerHtml = static::renderRelated($posts[1]);
-            $insertHelper->adaptiveIndex = 1/2;
-            $content = $insertHelper->run();
-
-            $insertHelper->content = $content;
-            $insertHelper->bannerHtml = static::renderRelated($posts[2]);
-            $insertHelper->adaptiveIndex = 2/3;
-            $content = $insertHelper->run();
+            if(isset($posts[2])) {
+                $insertHelper->content = $content;
+                $insertHelper->bannerHtml = static::renderRelated($posts[2]);
+                $insertHelper->adaptiveIndex = 2/3;
+                $content = $insertHelper->run();
+            }
         }
 
         return $content;
