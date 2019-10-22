@@ -8,6 +8,7 @@
 
 require_once plugin_dir_path(__FILE__) . 'includes/models/YandexRelated.php';
 require_once plugin_dir_path(__FILE__) . 'includes/models/YandexRelatedWidget.php';
+require_once plugin_dir_path(__FILE__) . 'includes/models/InsertHelper.php';
 
 add_action('admin_menu', 'createLinkOnMainMenu');
 

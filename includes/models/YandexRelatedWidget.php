@@ -7,24 +7,28 @@ class YandexRelatedWidget
         $thePostID = $post->ID;
 
         $countPrs = substr_count($content, '<p');
-        $prs = [
-            2,
-            round($countPrs/2),
-            round(($countPrs*2)/3)
-        ];
-
+  
         $query = "SELECT wp_posts.post_title as title, wp_posts.post_name as url FROM wp_posts INNER JOIN wp_yandex_related ON wp_posts.id = wp_yandex_related.related_article_id WHERE wp_yandex_related.article_id = $thePostID";
 
         $posts = $wpdb->get_results($query);
         $posts = array_chunk($posts, 3);
 
         if ( ! is_admin() ) {
-            foreach ($prs as $key => $pr) {
-                if(isset($posts[$key])) {
-                    $similarBlock = static::renderRelated($posts[$key]);
-                    $content = static::prefix_insert_after_paragraph($similarBlock, $pr, $content);
-                }
-            }
+            $insertHelper = new InsertHelper();
+            $insertHelper->content = $content;
+            $insertHelper->bannerHtml = static::renderRelated($posts[0]);
+            $insertHelper->paragraphId = 1;
+            $content = $insertHelper->run();
+
+            $insertHelper->content = $content;
+            $insertHelper->bannerHtml = static::renderRelated($posts[1]);
+            $insertHelper->adaptiveIndex = 1/2;
+            $content = $insertHelper->run();
+
+            $insertHelper->content = $content;
+            $insertHelper->bannerHtml = static::renderRelated($posts[2]);
+            $insertHelper->adaptiveIndex = 2/3;
+            $content = $insertHelper->run();
         }
 
         return $content;
