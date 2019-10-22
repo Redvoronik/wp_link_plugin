@@ -1,13 +1,13 @@
 <div class="similar-articles">
-	<div class="similar-articles__column">
-		<span class="similar-articles__title">Статьи по теме</span>
-		<ul class="similar-articles__list">
-        <?php foreach ($posts as $post): ?>
-            <li class="similar-articles__item">
-            	<a class="similar-articles__link" href="<?= $post->url ?>"><?= $post->title ?></a>
-            </li>
-        <?php endforeach; ?>
+    <div class="similar-articles__column">
+        <span class="similar-articles__title">Статьи по теме</span>
+	    <ul class="similar-articles__list">
+	        <?php foreach ($posts as $post): ?>
+                <li class="similar-articles__item">
+			        <a class="similar-articles__link" href="<?= $post->url ?>"><?= $post->title ?></a>
+		        </li>
+		    <?php endforeach; ?>
       	</ul>
-      	<div class="similar-articles__column"><?= $advert ?></div>
     </div>
+    <div class="similar-articles__column"><?= $advert ?></div>
 </div>
