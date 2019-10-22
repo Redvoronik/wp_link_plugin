@@ -14,9 +14,9 @@ class YandexRelated
 
     function __construct(int $post_id) {
         $this->post = get_post($post_id);
-        $this->site = get_option($site);
-        $this->user = get_option($user);
-        $this->key = get_option($key);
+        $this->site = get_option('site');
+        $this->user = get_option('user');
+        $this->key = get_option('key');
     }
 
     public function run() {
