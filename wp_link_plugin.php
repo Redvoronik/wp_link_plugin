@@ -12,10 +12,10 @@ require_once plugin_dir_path(__FILE__) . 'includes/models/InsertHelper.php';
 
 add_action('admin_menu', 'createLinkOnMainMenu');
 
-register_setting('yandex-related-group', 'site');
-register_setting('yandex-related-group', 'user');
-register_setting('yandex-related-group', 'key');
-register_setting('yandex-related-group', 'advert');
+register_setting('wp_link_plugin-group', 'site');
+register_setting('wp_link_plugin-group', 'user');
+register_setting('wp_link_plugin-group', 'key');
+register_setting('wp_link_plugin-group', 'advert');
 
 add_filter('the_content', array('YandexRelatedWidget', 'insert_related'));
 
@@ -59,17 +59,17 @@ function createLinkOnMainMenu()
         'Перелинковка yandex',
         'Перелинковка',
         'manage_options',
-        'yandex-related/includes/main.php',
+        'wp_link_plugin/includes/main.php',
         null,
         'dashicons-randomize'
     );
 
     add_submenu_page(
-        'yandex-related/includes/main.php',
+        'wp_link_plugin/includes/main.php',
 		'Настройка', 
 		'Настройка', 
 		'manage_options',
-		'yandex-related/includes/params.php'
+		'wp_link_plugin/includes/params.php'
 	);
 }
 
