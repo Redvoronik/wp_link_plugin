@@ -57,12 +57,14 @@ class YandexRelated
 
         foreach ($urls as $result) {
             if (!empty($result->doc->url)) {
-                if ($id = $this::getIdFromUrl($result->doc->url) && !in_array($id, $ids)) {
+                if ($id = $this::getIdFromUrl($result->doc->url)) {
                     if($j >= 20) {
                         break;
                     }
-                    $ids[] = $id;
-                    $j++;
+                    if(!in_array($id, $ids)) {
+                        $ids[] = $id;
+                        $j++;
+                    }
                 }
             }
         }
