@@ -79,7 +79,7 @@ class YandexRelated
 
         $post_id = $this->post->ID;
 
-        $sql = "DELETE FROM " . self::$table . " WHERE article_id = '$post_id'";
+        $sql = "DELETE FROM " . self::$table . " WHERE article_id = " . $post_id;
         dbDelta($sql);
 
         foreach ($this->ids as $id) {
