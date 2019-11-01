@@ -19,6 +19,9 @@ register_setting('wp_link_plugin-group', 'advert');
 register_setting('wp_link_plugin-group', 'firstblock');
 register_setting('wp_link_plugin-group', 'secondblock');
 register_setting('wp_link_plugin-group', 'thirdblock');
+register_setting('wp_link_plugin-group', 'firstblockindex');
+register_setting('wp_link_plugin-group', 'secondblockindex');
+register_setting('wp_link_plugin-group', 'thirdblockindex');
 
 add_filter('the_content', array('YandexRelatedWidget', 'insert_related'));
 

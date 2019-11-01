@@ -34,24 +34,37 @@
 
 		<div class="postbox">
 			<div class="inside" style="display: block;margin-right: 12px;">
+				<p>В расположении указывается либо целое число, для вывода блока после конкретного параграфа.  Либо дробное (2/3 и т.п.), для относительного расположения.</p>
 				<table class="form-table">
 					<tr>
 						<th scope="row"><label for="firstblock">Первый блок перелинковки</label></th>
 						<td><label><input name="firstblock" type="checkbox" id="firstblock" class="regular-text" <?= (get_option('firstblock')) ? 'checked="checked"' : null ?>>Отображать</label></td>
+						<td>
+							<input type="text" name="firstblockindex" value="<?php echo get_option('firstblockindex'); ?>" />
+							<p class="description">Расположение</p>
+						</td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="secondblock"> Второй блок перелинковки</label></th>
+						<th scope="row"><label for="secondblock">Второй блок перелинковки</label></th>
 						<td><label><input name="secondblock" type="checkbox" id="secondblock" class="regular-text" <?= (get_option('secondblock')) ? 'checked="checked"' : null ?>>Отображать</label></td>
+						<td>
+							<input type="text" name="secondblockindex" value="<?php echo get_option('secondblockindex'); ?>" />
+							<p class="description">Расположение</p>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="thirdblock">Третий блок перелинковки</label></th>
 						<td><label><input name="thirdblock" type="checkbox" id="thirdblock" class="regular-text" <?= (get_option('thirdblock')) ? 'checked="checked"' : null ?>>Отображать</label></td>
+						<td>
+							<input type="text" name="thirdblockindex" value="<?php echo get_option('thirdblockindex'); ?>" />
+							<p class="description">Расположение</p>
+						</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<input type="hidden" name="action" value="update" />
-		<input type="hidden" name="page_options" value="site,user,key,advert,firstblock,secondblock,thirdblock" />
+		<input type="hidden" name="page_options" value="site,user,key,advert,firstblock,secondblock,thirdblock,firstblockindex,secondblockindex,thirdblockindex" />
 
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />

@@ -25,7 +25,12 @@ class YandexRelatedWidget
             if(isset($posts[$postsIndex]) && $firstblock) {
                 $insertHelper->content = $content;
                 $insertHelper->bannerHtml = static::renderRelated($posts[$postsIndex]);
-                $insertHelper->paragraphId = 1;
+                $index = eval('return ' . get_option('firstblockindex') . ';');
+                if(is_integer($index)) {
+                    $insertHelper->paragraphId = $index;
+                } else {
+                    $insertHelper->adaptiveIndex = $index;
+                }
                 $content = $insertHelper->run();
                 $postsIndex++;
             }
@@ -33,7 +38,12 @@ class YandexRelatedWidget
             if(isset($posts[$postsIndex]) && $secondblock) {
                 $insertHelper->content = $content;
                 $insertHelper->bannerHtml = static::renderRelated($posts[$postsIndex]);
-                $insertHelper->adaptiveIndex = 1/2;
+                $index = eval('return ' . get_option('secondblockindex') . ';');
+                if(is_integer($index)) {
+                    $insertHelper->paragraphId = $index;
+                } else {
+                    $insertHelper->adaptiveIndex = $index;
+                }
                 $content = $insertHelper->run();
                 $postsIndex++;
             }
@@ -41,7 +51,12 @@ class YandexRelatedWidget
             if(isset($posts[$postsIndex]) && $thirdblock) {
                 $insertHelper->content = $content;
                 $insertHelper->bannerHtml = static::renderRelated($posts[$postsIndex]);
-                $insertHelper->adaptiveIndex = 2/3;
+                $index = eval('return ' . get_option('thirdblockindex') . ';');
+                if(is_integer($index)) {
+                    $insertHelper->paragraphId = $index;
+                } else {
+                    $insertHelper->adaptiveIndex = $index;
+                }
                 $content = $insertHelper->run();
             }
         }
