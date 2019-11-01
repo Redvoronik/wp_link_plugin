@@ -8,7 +8,7 @@ class YandexRelatedWidget
 
         $countPrs = substr_count($content, '<p');
   
-        $query = "SELECT wp_posts.post_title as title, wp_posts.post_name as url, wp_posts.id as id FROM wp_posts INNER JOIN wp_yandex_related ON wp_posts.id = wp_yandex_related.related_article_id WHERE wp_yandex_related.article_id = $thePostID";
+        $query = "SELECT wp_posts.post_title as title, wp_posts.post_name as url, wp_posts.id as id FROM wp_posts INNER JOIN wp_yandex_related ON wp_posts.id = wp_yandex_related.related_article_id WHERE wp_yandex_related.article_id = $thePostID ORDER BY wp_yandex_related.related_article_id DESC";
 
         $posts = $wpdb->get_results($query);
         $posts = array_chunk($posts, 3);
