@@ -13,25 +13,34 @@ class YandexRelatedWidget
         $posts = $wpdb->get_results($query);
         $posts = array_chunk($posts, 3);
 
+        $firstblock = (get_option('firstblock') == 'on');
+        $secondblock = (get_option('secondblock') == 'on');
+        $thirdblock = (get_option('thirdblock') == 'on');
+
+        $postsIndex = 0;
+
         if ( ! is_admin() ) {
-            if(isset($posts[0])) {
-                $insertHelper = new InsertHelper();
+            $insertHelper = new InsertHelper();
+
+            if(isset($posts[$postsIndex]) && $firstblock) {
                 $insertHelper->content = $content;
-                $insertHelper->bannerHtml = static::renderRelated($posts[0]);
+                $insertHelper->bannerHtml = static::renderRelated($posts[$postsIndex]);
                 $insertHelper->paragraphId = 1;
                 $content = $insertHelper->run();
+                $postsIndex++;
             }
             
-            if(isset($posts[1])) {
+            if(isset($posts[$postsIndex]) && $secondblock) {
                 $insertHelper->content = $content;
-                $insertHelper->bannerHtml = static::renderRelated($posts[1]);
+                $insertHelper->bannerHtml = static::renderRelated($posts[$postsIndex]);
                 $insertHelper->adaptiveIndex = 1/2;
                 $content = $insertHelper->run();
+                $postsIndex++;
             }
 
-            if(isset($posts[2])) {
+            if(isset($posts[$postsIndex]) && $thirdblock) {
                 $insertHelper->content = $content;
-                $insertHelper->bannerHtml = static::renderRelated($posts[2]);
+                $insertHelper->bannerHtml = static::renderRelated($posts[$postsIndex]);
                 $insertHelper->adaptiveIndex = 2/3;
                 $content = $insertHelper->run();
             }

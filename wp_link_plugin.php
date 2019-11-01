@@ -16,9 +16,11 @@ register_setting('wp_link_plugin-group', 'site');
 register_setting('wp_link_plugin-group', 'user');
 register_setting('wp_link_plugin-group', 'key');
 register_setting('wp_link_plugin-group', 'advert');
+register_setting('wp_link_plugin-group', 'firstblock');
+register_setting('wp_link_plugin-group', 'secondblock');
+register_setting('wp_link_plugin-group', 'thirdblock');
 
 add_filter('the_content', array('YandexRelatedWidget', 'insert_related'));
-
 
 function createDatabase()
 {
