@@ -79,6 +79,9 @@ class YandexRelated
 
         $post_id = $this->post->ID;
 
+        $sql = "DELETE FROM " . self::$table . " WHERE article_id = '$post_id'";
+        dbDelta($sql);
+
         foreach ($this->ids as $id) {
             $sql = "INSERT INTO " . self::$table . " (`article_id`, `related_article_id`) VALUES ( '$post_id', '$id')";
 
