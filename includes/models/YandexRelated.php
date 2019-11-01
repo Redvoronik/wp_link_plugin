@@ -103,14 +103,14 @@ class YandexRelated
         $limit = 50;
         $offset = $limit * ($page-1);
 
-        $where = null;
+        $where = ' wp_posts.post_type=\'post\'';
         if($param == 'nothing') {
-            $where = ' WHERE wp_posts.id IN (SELECT article_id FROM ' . self::$table . ' GROUP BY article_id HAVING count(*) = 0)';
+            $where = ' wp_posts.id IN (SELECT article_id FROM ' . self::$table . ' GROUP BY article_id HAVING count(*) = 0)';
         } elseif ($param == 'small') {
-            $where = ' WHERE wp_posts.id IN (SELECT article_id FROM ' . self::$table . ' GROUP BY article_id HAVING count(*) < 20)';
+            $where = ' wp_posts.id IN (SELECT article_id FROM ' . self::$table . ' GROUP BY article_id HAVING count(*) < 20)';
         }
 
-        return $wpdb->get_results("SELECT wp_posts.id as id, wp_posts.post_title as title, count(wp_yandex_related.related_article_id) as count_related_article_id, wp_posts.post_name as url, wp_yandex_related.updated_at as updated_at FROM wp_posts LEFT JOIN " . self::$table . " as wp_yandex_related ON wp_posts.id = wp_yandex_related.article_id " . $where . " GROUP BY wp_yandex_related.article_id ORDER BY wp_posts." . $orderBy . " " . $order . " LIMIT " . $limit . " OFFSET " . $offset);
+        return $wpdb->get_results("SELECT wp_posts.id as id, wp_posts.post_title as title, count(wp_yandex_related.related_article_id) as count_related_article_id, wp_posts.post_name as url, wp_yandex_related.updated_at as updated_at FROM wp_posts LEFT JOIN " . self::$table . " as wp_yandex_related ON wp_posts.id = wp_yandex_related.article_id WHERE" . $where . " GROUP BY wp_posts.id ORDER BY wp_posts." . $orderBy . " " . $order . " LIMIT " . $limit . " OFFSET " . $offset);
     }
 
     public static function getCount(string $query = null)
