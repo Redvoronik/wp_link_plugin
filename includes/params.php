@@ -2,7 +2,7 @@
 	<h2>Настройки</h2>
 
 	<form method="post" action="options.php">
-		<?php wp_nonce_field('update-options'); ?>
+		<?php settings_fields( 'wp_link_plugin-group' ); ?>
 		<div class="postbox">
 			<div class="inside" style="display: block;margin-right: 12px;">
 				<table class="form-table">
