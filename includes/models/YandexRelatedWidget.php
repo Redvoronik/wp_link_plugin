@@ -3,7 +3,7 @@
 class YandexRelatedWidget
 {
     public static function insert_related($content) {
-        global $post, $wpdb;
+        global $post, $wpdb, $table_prefix;
         $thePostID = $post->ID;
 
         $countPrs = substr_count($content, '<p');

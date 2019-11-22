@@ -116,7 +116,7 @@ class YandexRelated
             $where = " {$table_prefix}posts.id IN (SELECT article_id FROM {$table_prefix}" . self::$table . " GROUP BY article_id HAVING count(*) < 20)";
         }
 
-        return $wpdb->get_results("SELECT {$table_prefix}posts.id as id, {$table_prefix}posts.post_title as title, count(yandex_related.related_article_id) as count_related_article_id, {$table_prefix}posts.post_name as url, yandex_related.updated_at as updated_at FROM {$table_prefix}posts LEFT JOIN {$table_prefix}" . self::$table . " as yandex_related ON wp_posts.id = yandex_related.article_id WHERE" . $where . " GROUP BY {$table_prefix}posts.id ORDER BY {$table_prefix}posts." . $orderBy . " " . $order . " LIMIT " . $limit . " OFFSET " . $offset);
+        return $wpdb->get_results("SELECT {$table_prefix}posts.id as id, {$table_prefix}posts.post_title as title, count(" . self::$table . ".related_article_id) as count_related_article_id, {$table_prefix}posts.post_name as url, " . self::$table . ".updated_at as updated_at FROM {$table_prefix}posts LEFT JOIN {$table_prefix}" . self::$table . " as " . self::$table . " ON wp_posts.id = " . self::$table . ".article_id WHERE" . $where . " GROUP BY {$table_prefix}posts.id ORDER BY {$table_prefix}posts." . $orderBy . " " . $order . " LIMIT " . $limit . " OFFSET " . $offset);
     }
 
     public static function getCount(string $query = null)
